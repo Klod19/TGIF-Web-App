@@ -1,0 +1,115 @@
+/*.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.row_no_gutters {
+  padding-right: 0;
+  padding-left: 0;
+}*/
+
+
+
+
+td {
+    /*border: 1px solid black;*/
+    width:500px;
+ 
+    text-align:center;
+        }
+
+.row {
+    margin-right: 0 !important;
+    margin-left:0 !important;
+}
+
+
+
+.navBar{
+    width:inherit;
+    display: flex;
+    flex-direction: row;
+    
+    margin-top:20px;
+    background-color: gainsboro;
+    border:2px solid grey;
+    overflow-x: hidden;
+}
+
+.navCell{
+    height:44px;
+    margin:0px !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /*centers vertically*/
+    justify-content: center; /*centers orizontally*/
+}
+
+
+.navCell:hover{
+    background-color: grey;
+    color:white;
+}
+
+.navCell:hover a{ /* makes the link color white when hovering on the whole navcell
+     background-color: grey;
+     color:white;
+}
+
+.navBox:hover{
+    background-color: grey;
+    color:white;
+}
+
+.dropdownLink:hover{
+    background-color: grey;
+}
+
+.homeLink{
+    
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    margin-top:4px;
+}
+
+.homeLink:hover{
+    background-color: grey;
+}
+
+.dropdownLink{
+}
+
+a:link{
+    color: blue
+}
+
+
+
+
+
+.container{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-x: hidden;
+}
+
+input[type=checkbox] {
+    margin: 6px 0 0;
+} 
+
+.footer{
+    border:2px solid grey;
+    background-color: gainsboro;
+    color:black;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding-top:10px;
+  
+    display:flex;
+    flex-direction: row;
+    align-items: center; /*centers vertically*/
+    justify-content: center /*centers orizontally*/
+}
+

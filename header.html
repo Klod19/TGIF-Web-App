@@ -1,0 +1,51 @@
+        <div class= "container">
+                 <!-- the class "container is from Bootstrap (like "container-fluid") and has fixed width (unlike "container-fluid" class, which has full width); -->
+        <!-- try to make the nav bar in a separate file and call it with script in every page: header shuold load a premade template, from a separate HTML -->
+          <nav class="navbar navbar-default navbar-fixed-top container">
+              <div class="container bigNavBar">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+
+                </div>
+                <div id="navbar" class="navbar-collapse collapse container">
+
+                  <div class="row">
+                     <div class ="col-sm-12">
+                      <ul class="nav navbar-nav">
+                          <li ><img src="magn.png" id="logo"></li>
+                          <li class=><a href="#" class="smallTitle">TRANSPARENT GOVERNMENT IN FACTS</a></li>
+                          <li class="link"> <a class="subLink" href="index.html">Home</a></li>
+                          <li class="dropdown link">
+                              <a class="dropdown-toggle active anchor" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Congress 113 <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a class="subLink" href="house-page.html">House</a></li>
+                                <li><a class="subLink" href="senate-page.html">Senate</a></li>
+                              </ul>
+                          </li>
+
+                        <li class="dropdown link">
+                          <a href="#" class="dropdown-toggle anchor" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Attendance <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a class="subLink" href="house-attendance.html">House</a></li>
+                            <li><a class="subLink" href="senate-attendance.html">Senate</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown link">
+                          <a href="#" class="dropdown-toggle anchor" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party Loyalty <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a class="subLink"  href="house-party-loyalty.html">House</a></li>
+                            <li><a class="subLink"  href="senate-party-loyalty.html">Senate</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                      </div>
+                    </div>
+                </div><!--/.nav-collapse -->
+              </div>
+            </nav> 
+      </div>

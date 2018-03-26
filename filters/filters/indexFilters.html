@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <meta charset="utf-8">
+        <title>Filtered table</title>                    
+    </head>
+    <body>
+        
+        <p id="example"></p>
+        <div id="filters">
+            <select id="selector">
+                <option value="all">--All--</option>
+                <option value="AL">AL</option>
+                <option value="NY">NY</option>
+            </select>
+
+            <input id="rep" type="checkbox" name="party" value="R" checked> Republican
+            <input id="dem" type="checkbox" name="party" value="D" checked> Democrat
+        </div>
+        
+        <table id="table">
+        </table>
+        
+        <script src="data.js"></script>
+        <script src="mainFilter.js"></script>
+    </body>
+</html>

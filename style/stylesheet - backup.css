@@ -1,0 +1,164 @@
+/*.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.row_no_gutters {
+  padding-right: 0;
+  padding-left: 0;
+}*/
+
+
+
+td {
+    /*border: 1px solid black;*/
+    width:500px;
+ 
+    text-align:center;
+        }
+
+.row {
+    margin-right: 0 !important;
+    margin-left:0 !important;
+}
+
+/*to make the color of the table rows on hover darker*/
+.table-hover > tbody > tr:hover {
+  background-color: #D2D2D2;
+}
+
+
+
+.navBar{
+    margin-top:20px;
+    background-color: gainsboro;
+    border:2px solid grey;
+    overflow-x: hidden;
+}
+
+.navCell{
+    height:44px;
+    margin:0px !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /*centers vertically*/
+    justify-content: center; /*centers orizontally*/
+}
+
+
+.navCell:hover{
+    background-color: grey;
+    color:black;
+}
+
+.navCell:hover a{ /* makes the link "a" font color white when hovering on the whole navCell*/
+    background-color: grey;
+    color:black;
+    text-decoration: none;
+}
+
+.navBox{
+    color:blue;
+}
+
+.navBox:hover{
+    background-color: grey;
+    color:black;
+}
+
+.dropdown:hover{
+    background-color: grey;
+}
+
+.homeLink{
+    
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    margin-top:4px;
+}
+
+.homeLink:hover{
+    background-color: grey;
+}
+
+.dropdown{
+    position: relative;
+    display:inline-block;
+}
+
+.dropdown-content {
+    display:none;
+    position: absolute;
+    width: 100%;
+    overflow:auto; /*to enable scroll on smal screens*/
+    background-color: greenyellow;
+        
+   
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content{
+    display:block;
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link{
+    color: blue;
+    text-decoration: none;
+}
+
+a:visited{
+    color:blue;
+    text-decoration: none;
+}
+
+a:active{
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration: none;
+    color:black;
+}
+
+.container{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-x: hidden;
+   
+}
+
+.textContainer{
+    margin-top: 40px;
+}
+
+input[type=checkbox] {/*to aling text to checkboxes*/
+    margin: 6px 0 0;
+} 
+
+.footer{
+    border:2px solid grey;
+    background-color: gainsboro;
+    color: blue;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding-top:10px;
+    display:flex;
+    flex-direction: row;
+    align-items: center; /*centers vertically*/
+    justify-content: center /*centers orizontally*/
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    background-color: grey;
+}
+

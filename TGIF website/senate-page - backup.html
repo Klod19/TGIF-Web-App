@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <meta charset="utf-8"> 
+        <!-- BOOTSTRAP: this CDN(Contend Delivery Network) is the latest compiled and minified CSS; CDN used when you don't download Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- BOOTSTRAP: the following is for MOBILE: ensure proper rendering and touch-zooming -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- my CSS stylesheet: -->
+        <link rel="stylesheet" href="style/stylesheet.css">
+    </head>
+    <body>
+       <div class= "container">
+         <!-- the class "container is from Bootstrap (like "container-fluid") and has fixed width (unlike "container-fluid" class, which has full width); -->
+          <header class="container"> 
+            <div class="row">
+              <div class="col-sm-6" style="text-align:left"><a href="#">TGIF</a></div>
+              <div class="col-sm-6" style="text-align:right"><a href="#">EMAIL</a></div>
+            </div>
+          </header>
+    
+ <nav class="navbar navbar-default navbar-fixed-top container">
+      <div class="container bigNavBar">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class><a href="index.html">Home</a></li>
+            <li class="active"><a href="#about">Congress 113</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Attendance <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party Loyalty <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+         
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+       
+       
+  
+    
+       <div class="container textContainer">
+        <div class="row">
+           <div class="col-sm-9">
+            <h2>Senators</h2>
+            <p style="text-align: justify">First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military  officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+            </div>
+            <div class="col-sm.-3"></div>
+        </div>  
+       </div> 
+        <!-- the class "container is from Bootstrap (like "container-fluid") and has fixed width (unlike "container-fluid" class, which has full width) -->
+        <form class = "container  form-horizontal">
+            <div class ="row"> <!-- better to use other attributes, like FLEX -->
+                <div class="col-sm-2"><p>Filter by Party:</p> </div>
+                <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "Democratic"> Democratic</div>
+                <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "Republican"> Republican</div>
+                <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "Indipendent"> Indipendent</div>
+                <div class="col-sm-4">Filter by state: <select id="statesFilter"></select></div>
+             </div>
+        </form>
+        
+           
+        <div class="container tableContainer">
+            <div class="row">
+                 <div class="col-sm-12">
+                    <table id="myTable" class="table table-hover">
+                        <tbody id="senate-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container footer">
+        
+             <p >powered by megaTURD | all rigths reserved</p>
+        </div>
+     
+</div> 
+    <!-- BOOTSTRAP: jQuery Library from website for header-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- BOOTSTRAP jQuery Library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- BOOTSTRAP: compiled Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- following 3 lines: from website too -->
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- following line: my JS -->
+    <script src ="script/pro-congress-113-senate-DATA.js"></script>
+    <script src ="script/pro-congress-113-senate-MAIN.js"></script>
+    
+</body>
+</html>
