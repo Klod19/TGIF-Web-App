@@ -78,6 +78,7 @@ var app = new Vue({
                     var mostEngaged = app.getLowestTenPerc(sortedMissedArray, tenPerc);
                     app.storeEngaged(sortedLeastEngaged, mostEngaged);
 //                    buildTables()
+                    console.log(ratedArray);
                     })
             },
 
@@ -168,17 +169,24 @@ var app = new Vue({
 
 
             // this function connects NAMES (of the whole group) with : a) total votes with party b) % of votes with party c) party affiliation
-
+            //MAKE AN OBJECT OUT OF IT
             ratesToNames: function(array) {
+                console.log(array);
                 var namesAndRates = [];
                 array.forEach(function(member){
-                var name = member.last_name + " " + member.first_name
-                var partyId = member.party;
-                var percVotesWithParty = member.votes_with_party_pct;
-                var totalVotesWithParty = Math.round((percVotesWithParty*member.total_votes))/100;
-                if (member.total_votes != 0){  // I exclude members whose total votes are 0
-                    namesAndRates.push([name, partyId, totalVotesWithParty, percVotesWithParty])
-                  }
+                    var obj ={}
+                    obj["first_name"] = member.first_name;
+                    obj["last_name"] = member.last_name;
+                    if(member.middle_name){
+                        obj["middle_name"] = member.middle_name;
+                    }
+                    var name = member.last_name + " " + member.first_name
+                    var partyId = member.party;
+                    var percVotesWithParty = member.votes_with_party_pct;
+                    var totalVotesWithParty = Math.round((percVotesWithParty*member.total_votes))/100;
+                    if (member.total_votes != 0){  // I exclude members whose total votes are 0
+                        namesAndRates.push([name, partyId, totalVotesWithParty, percVotesWithParty])
+                      }
 
                })
                 return namesAndRates;
@@ -263,7 +271,7 @@ var app = new Vue({
 
 
 
-            //now to store the 2 arrays least and most engaged in obj "statistics", as values of keys
+            //now to store the 2 arrays least and most engaged in "data"
             storeEngaged: function(array1, array2) {
                 array1.forEach(function(member1){
                     app.leastEngagedArray.push(member1);
@@ -273,6 +281,8 @@ var app = new Vue({
                 array2.forEach(function(member2){
                     app.mostEngagedArray.push(member2);
                 })
+                console.log (array2)
+                console.log(app.mostEngagedArray);
 
             },
         //methods end    

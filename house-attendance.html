@@ -74,6 +74,17 @@
                     </tr>
                 </thead>
                 <tbody id ="most_engaged_table">
+                    <tr v-for="member in mostEngagedArray">
+                        <td>
+<!--                            <a v-bind:href="member.url">                                                             {{member.last_name+","}} -->
+     
+                                {{member.first_name }}
+<!--                            </a>-->
+                        </td>
+                        <td>{{member.party}}</td>
+                        <td>{{member.state}}</td>
+                        <td>{{}}</td>
+                        <td>{{member.votes_with_party_pct + "%"}}</td>
                 </tbody>
             </table>
     </div> 
