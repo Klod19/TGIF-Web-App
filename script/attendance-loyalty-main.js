@@ -94,7 +94,7 @@ var app = new Vue({
                 var repArray =[];
                 var indArray =[];
                 
-                //this loop makes 3 array based on party
+                //this loop makes 3 arrays based on party AND updates the counter
                 for (var i = 0; i < totalMembers.length; i++){ 
                     if (totalMembers[i].party == "D"){
                         demArray.push(totalMembers[i]);
@@ -111,6 +111,21 @@ var app = new Vue({
                 }
                   //NOW: get the least loyal and most loyal DIVIDED PER PARTY
                 //these 3 are arrays, with rates connected to names
+                var test = app.ratesToNames(totalMembers)
+                console.log(test);
+                
+                var sorted_test = test.sort(function(a, b) { 
+                    return a.totalMissed - b.totalMissed;
+                })
+                
+                console.log(sorted_test)
+                
+//                test.forEach(function(member){
+//                    console.log(member.last_name + member.totalMissed) 
+//                })
+//                
+                
+                
                 var nameRatesDem = app.ratesToNames(demArray);
                 var nameRatesRep = app.ratesToNames(repArray);
                 var nameRatesInd = app.ratesToNames(indArray);
@@ -201,7 +216,7 @@ var app = new Vue({
 
             // this funtion sort the integers in an array in an increasing order
             sortNumber: function (a, b) {
-                return a[3] - b[3]; //here I'm using an index  "3" because I'm working with the value corresponding to index "3" of the arrays forming the elements of the sorted array 
+                return a.totalMissed - b.totalMissed; //here I'm using an index  "3" because I'm working with the value corresponding to index "3" of the arrays forming the elements of the sorted array 
             },
             //this function gets the 10% of the length of an array
             getTenPerc: function(array){
@@ -341,3 +356,36 @@ var app = new Vue({
 //            }
 
    
+
+
+
+var cars = [
+
+                    {
+                        name: "Honda",
+                        speed: 80
+                    },
+
+                    {
+                        name: "BMW",
+                        speed: 180
+                    },
+
+                    {
+                        name: "Trabi",
+                        speed: 40
+                    },
+
+                    {
+                        name: "Ferrari",
+                        speed: 200
+                    }
+                ]
+
+
+                cars.sort(function(a, b) { 
+                    return a.speed - b.speed;
+                })
+
+                for(var i in cars)
+                    console.log(cars[i].name) // Trabi Honda BMW Ferrari 
