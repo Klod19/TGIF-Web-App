@@ -115,15 +115,22 @@ var app = new Vue({
                 console.log(test);
                 
                 var sorted_test = test.sort(function(a, b) { 
-                    return a.totalMissed - b.totalMissed;
+                    return a.missed_votes - b.missed_votes;
                 })
                 
                 console.log(sorted_test)
+                // NOW I JUST GET THE FIRST 10% and LAST 10% out of sorted_test
+                var perc = app.getTenPerc(sorted_test)
+                console.log(perc);
+                console.log("MOST ENGAGED")
+                var most_engaged = app.getLowestTenPerc(sorted_test, perc);
+                most_engaged.map((m) => console.log(m.last_name + " " + m.missed_votes))
+
+                console.log("LEAST ENGAGED")
                 
-//                test.forEach(function(member){
-//                    console.log(member.last_name + member.totalMissed) 
-//                })
-//                
+                var least_engaged = app.getHighestTenPerc(sorted_test, perc);
+                least_engaged.reverse().map((m) => console.log(m.last_name + " " + m.missed_votes))
+               
                 
                 
                 var nameRatesDem = app.ratesToNames(demArray);
@@ -185,32 +192,46 @@ var app = new Vue({
 
             // this function connects NAMES (of the whole group) with : a) total votes with party b) % of votes with party c) party affiliation
             //MAKE AN OBJECT OUT OF IT
+//            ratesToNames: function(array) {
+//                console.log(array);
+//                var namesAndRates = [];
+//                array.forEach(function(member){
+//                    var obj ={}
+//                    obj["first_name"] = member.first_name;
+//                    obj["last_name"] = member.last_name;
+//                    if(member.middle_name){
+//                        obj["middle_name"] = member.middle_name;
+//                    }
+//                    obj["party"] = member.party;
+//                    obj["url"] = member.url;
+//                    obj["totalMissed"] = member.missed_votes;
+//                    obj["percMissed"]= member.missed_votes_pct;
+//                    obj["percVotesWithParty"] = member.votes_with_party_pct;
+//                    obj["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
+//                    // I exclude members whose total votes are 0 and not Independent
+//                    if (member.total_votes != 0 || member.party == "I"){  
+//                        namesAndRates.push(obj)
+//                      }
+//
+//               })
+//                console.log(namesAndRates);
+//                return namesAndRates;
+//            },
+            
+            //Change the following, for it to process the array obtained with getDAta
             ratesToNames: function(array) {
                 console.log(array);
-                var namesAndRates = [];
                 array.forEach(function(member){
-                    var obj ={}
-                    obj["first_name"] = member.first_name;
-                    obj["last_name"] = member.last_name;
-                    if(member.middle_name){
-                        obj["middle_name"] = member.middle_name;
-                    }
-                    obj["party"] = member.party;
-                    obj["url"] = member.url;
-                    obj["totalMissed"] = member.missed_votes;
-                    obj["percMissed"]= member.missed_votes_pct;
-                    obj["percVotesWithParty"] = member.votes_with_party_pct;
-                    obj["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
+                    member["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
                     // I exclude members whose total votes are 0 and not Independent
-                    if (member.total_votes != 0 || member.party == "I"){  
-                        namesAndRates.push(obj)
+                    if (member.total_votes == 0 && member.party != "I"){  
+                        var index = array.indexOf(member)
+                        array.splice(index, 1);
                       }
-
                })
-                console.log(namesAndRates);
-                return namesAndRates;
+                return array;
             },
-
+            
 
 
 
@@ -244,6 +265,8 @@ var app = new Vue({
                 })
                 return highestTenPerc;
             },
+            
+
 
 
 
