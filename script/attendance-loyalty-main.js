@@ -90,9 +90,9 @@ var app = new Vue({
             
 
             getMembersStatistics : function(totalMembers) {
-                var demArray =[];
-                var repArray =[];
-                var indArray =[];
+                var demArray=[];
+                var repArray=[];
+                var indArray=[];
                 
                 //this loop makes 3 arrays based on party AND updates the counter
                 for (var i = 0; i < totalMembers.length; i++){ 
@@ -109,29 +109,34 @@ var app = new Vue({
                         app.indNumber++
                     }
                 }
-                  //NOW: get the least loyal and most loyal DIVIDED PER PARTY
+                  //NOW: get the least and most loyal : work on "test", a modified version of the original data
                 //these 3 are arrays, with rates connected to names
-                var test = app.ratesToNames(totalMembers)
-                console.log(test);
+                var all_members = app.ratesToNames(totalMembers)
+                console.log(all_members);
                 
-                var sorted_test = test.sort(function(a, b) { 
-                    return a.missed_votes - b.missed_votes;
+                var sorted_engaged = all_members.sort(function(a, b) { 
+                    return parseFloat(a.missed_votes) - parseFloat(b.missed_votes);
                 })
                 
-                console.log(sorted_test)
+                console.log(sorted_engaged)
                 // NOW I JUST GET THE FIRST 10% and LAST 10% out of sorted_test
-                var perc = app.getTenPerc(sorted_test)
+                var perc = app.getTenPerc(sorted_engaged)
                 console.log(perc);
-                console.log("MOST ENGAGED")
-                var most_engaged = app.getLowestTenPerc(sorted_test, perc);
-                most_engaged.map((m) => console.log(m.last_name + " " + m.missed_votes))
+                var most_engaged = app.getLowestTenPerc(sorted_engaged, perc);
+//                most_engaged.map((m) => console.log(m.last_name + " " + m.missed_votes))
 
-                console.log("LEAST ENGAGED")
                 
-                var least_engaged = app.getHighestTenPerc(sorted_test, perc);
-                least_engaged.reverse().map((m) => console.log(m.last_name + " " + m.missed_votes))
+                var least_engaged = app.getHighestTenPerc(sorted_engaged, perc);
+//                least_engaged.reverse().map((m) => console.log(m.last_name + " " + m.missed_votes))
                
+                var sorted_loyal = all_members.sort(function(a, b){
+                    return parseFloat(a.votes_with_party_pct) - parseFloat(b.votes_with_party_pct);
+                })
                 
+                console.log("10 % LEAST LOYAL:")
+                sorted_loyal.map(m => console.log(m.last_name + " " + m.votes_with_party_pct));
+                console.log(app.getLowestTenPerc(sorted_loyal, perc));
+//                app.getLoyalVotes(sorted_test);
                 
                 var nameRatesDem = app.ratesToNames(demArray);
                 var nameRatesRep = app.ratesToNames(repArray);
@@ -184,7 +189,10 @@ var app = new Vue({
                     avgLoyalty = "-"
                     return avgLoyalty
                 }
-                else {return avgLoyalty+"%"}
+                else {
+                    console.log("AVG LOYALTY: " + avgLoyalty);
+                    return avgLoyalty+"%"
+                }
             },
 
 
