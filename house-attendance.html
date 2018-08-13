@@ -14,13 +14,14 @@
     <body id = "house_page">
       <div id="header"> </div>
         <!--Table container-->
-        <div class="container textContainer">
+      <div class="container textContainer">
             <h2>Attendance</h2>
             <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
 
             <p>The House uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
-    	    
-            <h2>House at a glance</h2>
+       </div>   
+       <div id="vueApp">
+    	    <h2>House at a glance</h2>
             <table class ="table table-bordered">
                 <thead>
                     <tr>
@@ -32,18 +33,21 @@
                 <tbody>
                     <tr id="repRow">
                         <td>Republican</td>
-                        
+                        <td>{{repNumber}}</td>
+                        <td>{{percRepLoyalVotes}}</td>
                     </tr>
                     <tr id="demRow">
                         <td>Democrat</td>
-                      
+                        <td>{{demNumber}}</td>  
+                        <td>{{percDemLoyalVotes}}</td>
                     </tr>
                     <tr id="indRow">
                         <td>Independent</td>
-                      
+                        <td>{{indNumber}}</td>
+                        <td>{{percIndLoyalVotes}}</td>
                     </tr>
                 </tbody>
-            </table>
+             </table>
 
             <h2>Least Engaged (Bottom 10% Attendance)</h2>
             <table class="table table-bordered">
@@ -74,13 +78,19 @@
             </table>
     </div> 
     <div class="container footer">
-             <div>
-             <p >powered by megaTURD | all rigths reserved</p>
+            <div>
+                 <p >powered by megaTURD | all rigths reserved</p>
             </div>
     </div>
+    	        
+            
     	
     <!-- BOOTSTRAP: jQuery Library-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Following: Vue link to load Vue library DEVELOPMENT MODE!!!  -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <!-- FOLLOWING: PRODUCTION VERSION OF VUE, for when the website is deployed -->
+        <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
     <!-- BOOTSTRAP: compiled Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- following line: my JS -->

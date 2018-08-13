@@ -25,11 +25,11 @@
         </div>
    <div id="vueApp">
           <div class="container" v-if="members.length == 0" >
-                          <div class="row">   
-                              <div class="col-sm-2"></div>
-                              <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
-                              <div class="col-sm-2"></div>
-                           </div>
+                    <div class="row">   
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                        <div class="col-sm-2"></div>
+                    </div>
           </div>
           <div class ="vueContainer" v-if="showVue">
            <form class = "container  form-horizontal">
@@ -60,10 +60,17 @@
                                 <th>Years in Office</th>
                                 <th>Votes with Party</th>
                             </thead>
-                            <tbody id="senateTable">
+                            <tbody>
                                 <tr v-for="member in members">
-                                  <td><a v-bind:href="member.url">{{member.last_name+","}} <span v-if="member.middle_name"> {{member.middle_name}}</span> {{member.first_name }}</a></td>
-                                  <td>{{member.party}}</td><td>{{member.state}}</td><td>{{member.seniority}}</td><td>{{member.votes_with_party_pct + "%"}}</td>
+                                  <td>
+                                      <a v-bind:href="member.url">{{member.last_name+","}} 
+                                          <span v-if="member.middle_name"> {{member.middle_name}}</span>     {{member.first_name }}
+                                      </a>
+                                  </td>
+                                  <td>{{member.party}}</td>
+                                  <td>{{member.state}}</td>
+                                  <td>{{member.seniority}}</td>
+                                  <td>{{member.votes_with_party_pct + "%"}}</td>
                                 </tr>
                             </tbody>
                           </table>

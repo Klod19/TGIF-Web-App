@@ -17,23 +17,23 @@
     
     <div id="header"></div>
 
-               <div class="container textContainer">
-                <div class="row">
+    <div class="container textContainer">
+        <div class="row">
                    <div class="col-sm-9">
                     <h2>Senators</h2>
                     <p style="text-align: justify">First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military  officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
                     </div>
                     <div class="col-sm.-3"></div>
-                </div>  
-               </div> 
+        </div>  
+    </div> 
                 <!-- the class "container is from Bootstrap (like "container-fluid") and has fixed width (unlike "container-fluid" class, which has full width) -->
-           <div id="vueApp">
+    <div id="vueApp">
                   <div class="container" v-if="members.length == 0">
-                                  <div class="row">   
-                                      <div class="col-sm-2"></div>
-                                      <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
-                                      <div class="col-sm-2"></div>
-                                   </div>
+                            <div class="row">   
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                                <div class="col-sm-2"></div>
+                            </div>
                   </div>
 
                <div class ="vueContainer" v-if="showVue">     
@@ -65,7 +65,7 @@
                                     <th>Years in Office</th>
                                     <th>Votes with Party</th>
                                 </thead>
-                                <tbody id="senateTable">
+                                <tbody>
                                     <tr v-for="member in members">
                                       <td><a v-bind:href="member.url">{{member.last_name+","}} <span v-if="member.middle_name"> {{member.middle_name}}</span> {{member.first_name }}</a></td>
                                       <td>{{member.party}}</td><td>{{member.state}}</td><td>{{member.seniority}}</td><td>{{member.votes_with_party_pct + "%"}}</td>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-         </div>      
+        </div>      
                 <div class="container footer">
 
                      <p >powered by megaTURD | all rigths reserved</p>

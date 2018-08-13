@@ -6,7 +6,7 @@ array.forEach(function(x, index){
     console.log(x.party)
 })
 
-//!! function is generic! its paramether to, goes through the whole array, we colud write x, member, whatever we like
+//!! function is generic! its paramether too, goes through the whole array, we colud write x, member, whatever we like
 // !! the second paramether (index) returns the index, but i can name it as i like IMPORTANT IS it's the second paramether
 
 var statistics = {

@@ -158,7 +158,7 @@ a:hover{
 
 .anchor:hover{
     color: blue !important;
-    font-weight: bold;
+/*    font-weight: bold;*/
     text-decoration: none;
 }
 
