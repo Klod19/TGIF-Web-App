@@ -180,15 +180,19 @@ var app = new Vue({
                     if(member.middle_name){
                         obj["middle_name"] = member.middle_name;
                     }
-                    var name = member.last_name + " " + member.first_name
-                    var partyId = member.party;
-                    var percVotesWithParty = member.votes_with_party_pct;
-                    var totalVotesWithParty = Math.round((percVotesWithParty*member.total_votes))/100;
-                    if (member.total_votes != 0){  // I exclude members whose total votes are 0
-                        namesAndRates.push([name, partyId, totalVotesWithParty, percVotesWithParty])
+                    obj["party"] = member.party;
+                    obj["url"] = member.url;
+                    obj["totalMissed"] = member.missed_votes;
+                    obj["percMissed"]= member.missed_votes_pct;
+                    obj["percVotesWithParty"] = member.votes_with_party_pct;
+                    obj["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
+                    // I exclude members whose total votes are 0 and not Independent
+                    if (member.total_votes != 0 || member.party == "I"){  
+                        namesAndRates.push(obj)
                       }
 
                })
+                console.log(namesAndRates);
                 return namesAndRates;
             },
 
