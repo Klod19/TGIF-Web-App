@@ -154,11 +154,11 @@ var app = new Vue({
                 // NOW I JUST GET THE FIRST 10% and LAST 10% out of sorted_test
                 var perc = app.getTenPerc(sorted_engaged)
                 console.log(perc);
-                var most_engaged = app.getLowestTenPerc(sorted_engaged, perc);
+                app.mostEngagedArray = app.getLowestTenPerc(sorted_engaged, perc);
 //                most_engaged.map((m) => console.log(m.last_name + " " + m.missed_votes))
 
                 
-                var least_engaged = app.getHighestTenPerc(sorted_engaged, perc);
+                app.leastEngagedArray = app.getHighestTenPerc(sorted_engaged, perc).reverse();
 //                least_engaged.reverse().map((m) => console.log(m.last_name + " " + m.missed_votes))
                
                 var sorted_loyal = all_members.sort(function(a, b){
