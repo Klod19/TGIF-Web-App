@@ -13,96 +13,118 @@
     
 <body id = "house_page">
     <div id="header"> </div>
-        <!--Table container-->
-        <div class="container textContainer">
-            <h2>Party Loyalty</h2>
-            <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+
     <div id="vueApp">
-    	 <h2>House at a glance</h2>
-         <table class ="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Number of Reps</th>
-                        <th>% Voted with Party</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="repRow">
-                        <td>Republican</td>
-                        <td>{{repNumber}}</td>
-                        <td>{{percRepLoyalVotes}}</td>    
-                    </tr>
-                    <tr id="demRow">
-                        <td>Democrat</td>
-                        <td>{{demNumber}}</td>
-                        <td>{{percDemLoyalVotes}}</td>               
-                    </tr>
-                    <tr id="indRow">
-                        <td>Independent</td>
-                        <td>{{indNumber}}</td>
-                        <td>{{percIndLoyalVotes}}</td>        
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Least Loyal (Bottom 10% of Party Loyalty)</h2>
-            <table class= "table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody id="least_loyal_table">
-                    <tr v-for="member in leastLoyalArray">
-                        <td>
-                            <a v-bind:href="member.url">                                                   
-                                {{member.last_name+","}} 
-                                <span if ="member.middle_name" >
-                                   {{member.middle_name}}
-                                </span>
-                                {{member.first_name }}
-                            </a>
-                        </td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.totalVotesWithParty}}</td>
-                        <td>{{member.votes_with_party_pct + "%"}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Most Loyal (Top 10% of Party Loyalty)</h2>
-            <table class = "table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody id="most_loyal_table">
-                    <tr v-for="member in mostLoyalArray">
-                        <td>
-                            <a v-bind:href="member.url">                                                   
-                                {{member.last_name+","}} 
-                                <span if ="member.middle_name" >
-                                   {{member.middle_name}}
-                                </span>
-                                {{member.first_name }}
-                            </a>
-                        </td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.totalVotesWithParty}}</td>
-                        <td>{{member.votes_with_party_pct + "%"}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container waitbox" v-if="allMembers.length == 0" >
+            <div class="row">   
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+        <div class = "container" v-if="showVue == true">
+            <div class = "row upperContent">
+                <div class = "col-md-6">
+                    <div class="container textContainer">
+                        <h1>Party Loyalty</h1>
+                        <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+                    </div>
+                </div>
+                <div class = "col-md-6 glanceContainer">
+                    <h3>House at a glance</h3>
+                    <table class ="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Party</th>
+                                <th>Number of Reps</th>
+                                <th>% Voted with Party</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="repRow">
+                                <td>Republican</td>
+                                <td>{{repNumber}}</td>
+                                <td>{{percRepLoyalVotes}}</td>    
+                            </tr>
+                            <tr id="demRow">
+                                <td>Democrat</td>
+                                <td>{{demNumber}}</td>
+                                <td>{{percDemLoyalVotes}}</td>               
+                            </tr>
+                            <tr id="indRow">
+                                <td>Independent</td>
+                                <td>{{indNumber}}</td>
+                                <td>{{percIndLoyalVotes}}</td>        
+                            </tr>
+                        </tbody>
+                     </table>
+                </div>
+            </div>
+             
+             <div class = row>
+                 <div class="col-md-6">
+                     <h3>Least Loyal (Bottom 10% of Party Loyalty)</h3>
+                     <table class= "table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Party</th>
+                                <th>Number of Party Votes</th>
+                                <th>% of Party Votes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="least_loyal_table">
+                            <tr v-for="member in leastLoyalArray">
+                                <td>
+                                    <a v-bind:href="member.url">                                                   
+                                        {{member.last_name+","}} 
+                                        <span if ="member.middle_name" >
+                                           {{member.middle_name}}
+                                        </span>
+                                        {{member.first_name }}
+                                    </a>
+                                </td>
+                                <td>{{member.party}}</td>
+                                <td>{{member.totalVotesWithParty}}</td>
+                                <td>{{member.votes_with_party_pct + "%"}}</td>
+                            </tr>
+                        </tbody>
+                     </table>
+                 </div>
+                 <div class="col-md-6">
+                     <h3>Most Loyal (Top 10% of Party Loyalty)</h3>
+                     <table class = "table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Party</th>
+                                <th>Number of Party Votes</th>
+                                <th>% of Party Votes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="most_loyal_table">
+                            <tr v-for="member in mostLoyalArray">
+                                <td>
+                                    <a v-bind:href="member.url">                                                   
+                                        {{member.last_name+","}} 
+                                        <span if ="member.middle_name" >
+                                           {{member.middle_name}}
+                                        </span>
+                                        {{member.first_name }}
+                                    </a>
+                                </td>
+                                <td>{{member.party}}</td>
+                                <td>{{member.totalVotesWithParty}}</td>
+                                <td>{{member.votes_with_party_pct + "%"}}</td>
+                            </tr>
+                        </tbody>
+                     </table>
+                 </div>
+             </div>
+                     
+        </div>
+    	 
     </div>        
-    </div>
             
     <div class="container footer">
              <div>
