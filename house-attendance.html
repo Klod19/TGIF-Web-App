@@ -14,104 +14,115 @@
     <body id = "house_page">
       <div id="header"> </div>
         <!--Table container-->
-      <div class="container textContainer">
-            <h2>Attendance</h2>
-            <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
-
-            <p>The House uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
-       </div>   
        <div id="vueApp">
             <div class="container waitbox" v-if="allMembers.length == 0" >
-                <div class="row">   
+                <div class="row upperContent">   
                     <div class="col-sm-2"></div>
                     <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
                     <div class="col-sm-2"></div>
                 </div>
             </div>
+
             <div class="container" v-if="showVue == true">
-                <h2>House at a glance</h2>
-                <table class ="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Party</th>
-                            <th>Number of Representatives</th>
-                            <th>% of Missed Votes (to which party they belong)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="repRow">
-                            <td>Republican</td>
-                            <td>{{repNumber}}</td>
-                            <td>{{percRepMissed}}</td>
-                        </tr>
-                        <tr id="demRow">
-                            <td>Democrat</td>
-                            <td>{{demNumber}}</td>  
-                            <td>{{percDemMissed}}</td>
-                        </tr>
-                        <tr id="indRow">
-                            <td>Independent</td>
-                            <td>{{indNumber}}</td>
-                            <td>{{percIndMissed}}</td>
-                        </tr>
-                    </tbody>
-                 </table>
+                <div class = "row">
+                    <div class="col-md-6">
+                        <div class="container explContainer">
+                            <h1>Attendance</h1>
+                            <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
 
-                <h2>Least Engaged (Bottom 10% Attendance)</h2>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Party</th>
-                            <th>Number of Missed Votes</th>
-                            <th>% Missed</th>
-                        </tr>
-                    </thead>
-                    <tbody id="least_engaged_table">
-                        <tr v-for="member in leastEngagedArray">
-                            <td>
-                                <a v-bind:href="member.url">                                                   
-                                    {{member.last_name+","}} 
-                                    <span if ="member.middle_name" >
-                                       {{member.middle_name}}
-                                    </span>
-                                    {{member.first_name }}
-                                </a>
-                            </td>
-                            <td>{{member.party}}</td>
-                            <td>{{member.missed_votes}}</td>
-                            <td>{{member.missed_votes_pct + "%"}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>Most Engaged (Top 10% Attendance)</h2>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Party</th>
-                            <th>Number of Missed Votes</th>
-                            <th>% Missed</th>
-                        </tr>
-                    </thead>
-                    <tbody id ="most_engaged_table">
-                        <tr v-for="member in mostEngagedArray">
-                            <td>
-                                <a v-bind:href="member.url">                                                   
-                                    {{member.last_name+","}} 
-                                    <span if ="member.middle_name" >
-                                       {{member.middle_name}}
-                                    </span>
-                                    {{member.first_name }}
-                                </a>
-                            </td>
-                            <td>{{member.party}}</td>
-                            <td>{{member.missed_votes}}</td>
-                            <td>{{member.missed_votes_pct + "%"}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <p>The House uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tie breaking vote.</p>
+                         </div>
+                    </div>
+                    <div class="col-md-6 glanceContainer">
+                        <h3>Attendance in the House at a glance</h3>
+                        <table class ="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Party</th>
+                                    <th>Number of Representatives</th>
+                                    <th>% of Missed Votes (to which party they belong)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="repRow">
+                                    <td>Republican</td>
+                                    <td>{{repNumber}}</td>
+                                    <td>{{percRepMissed}}</td>
+                                </tr>
+                                <tr id="demRow">
+                                    <td>Democrat</td>
+                                    <td>{{demNumber}}</td>  
+                                    <td>{{percDemMissed}}</td>
+                                </tr>
+                                <tr id="indRow">
+                                    <td>Independent</td>
+                                    <td>{{indNumber}}</td>
+                                    <td>{{percIndMissed}}</td>
+                                </tr>
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+                <div class ="row">
+                    <div class="col-md-6">
+                        <h3>Least Engaged (Bottom 10% Attendance)</h3>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Party</th>
+                                    <th>Number of Missed Votes</th>
+                                    <th>% Missed</th>
+                                </tr>
+                            </thead>
+                            <tbody id="least_engaged_table">
+                                    <tr v-for="member in leastEngagedArray">
+                                        <td>
+                                            <a v-bind:href="member.url">                                                   
+                                                {{member.last_name+","}} 
+                                                <span if ="member.middle_name" >
+                                                   {{member.middle_name}}
+                                                </span>
+                                                {{member.first_name }}
+                                            </a>
+                                        </td>
+                                        <td>{{member.party}}</td>
+                                        <td>{{member.missed_votes}}</td>
+                                        <td>{{member.missed_votes_pct + "%"}}</td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Most Engaged (Top 10% Attendance)</h3>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Party</th>
+                                    <th>Number of Missed Votes</th>
+                                    <th>% Missed</th>
+                                </tr>
+                            </thead>
+                            <tbody id ="most_engaged_table">
+                                <tr v-for="member in mostEngagedArray">
+                                    <td>
+                                        <a v-bind:href="member.url">                                                   
+                                            {{member.last_name+","}} 
+                                            <span if ="member.middle_name" >
+                                               {{member.middle_name}}
+                                            </span>
+                                            {{member.first_name }}
+                                        </a>
+                                    </td>
+                                    <td>{{member.party}}</td>
+                                    <td>{{member.missed_votes}}</td>
+                                    <td>{{member.missed_votes_pct + "%"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>   
             </div>
     </div> 
     <div class="container footer">
