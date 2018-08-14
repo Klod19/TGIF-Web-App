@@ -21,89 +21,98 @@
             <p>The House uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
        </div>   
        <div id="vueApp">
-    	    <h2>House at a glance</h2>
-            <table class ="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Number of Representatives</th>
-                        <th>% of Missed Votes per Party</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="repRow">
-                        <td>Republican</td>
-                        <td>{{repNumber}}</td>
-                        <td>{{percRepMissed}}</td>
-                    </tr>
-                    <tr id="demRow">
-                        <td>Democrat</td>
-                        <td>{{demNumber}}</td>  
-                        <td>{{percDemMissed}}</td>
-                    </tr>
-                    <tr id="indRow">
-                        <td>Independent</td>
-                        <td>{{indNumber}}</td>
-                        <td>{{percIndMissed}}</td>
-                    </tr>
-                </tbody>
-             </table>
+            <div class="container" v-if="allMembers.length == 0" >
+                <div class="row">   
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+            <div class="container" v-if="showVue == true">
+                <h2>House at a glance</h2>
+                <table class ="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Party</th>
+                            <th>Number of Representatives</th>
+                            <th>% of Missed Votes (to which party they belong)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="repRow">
+                            <td>Republican</td>
+                            <td>{{repNumber}}</td>
+                            <td>{{percRepMissed}}</td>
+                        </tr>
+                        <tr id="demRow">
+                            <td>Democrat</td>
+                            <td>{{demNumber}}</td>  
+                            <td>{{percDemMissed}}</td>
+                        </tr>
+                        <tr id="indRow">
+                            <td>Independent</td>
+                            <td>{{indNumber}}</td>
+                            <td>{{percIndMissed}}</td>
+                        </tr>
+                    </tbody>
+                 </table>
 
-            <h2>Least Engaged (Bottom 10% Attendance)</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number of Missed Votes</th>
-                        <th>% Missed</th>
-                    </tr>
-                </thead>
-                <tbody id="least_engaged_table">
-                    <tr v-for="member in leastEngagedArray">
-                        <td>
-                            <a v-bind:href="member.url">                                                   
-                                {{member.last_name+","}} 
-                                <span if ="member.middle_name" >
-                                   {{member.middle_name}}
-                                </span>
-                                {{member.first_name }}
-                            </a>
-                        </td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.missed_votes}}</td>
-                        <td>{{member.missed_votes_pct + "%"}}</td>
-                    </tr>
-                </tbody>
-            </table>
+                <h2>Least Engaged (Bottom 10% Attendance)</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Party</th>
+                            <th>Number of Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="least_engaged_table">
+                        <tr v-for="member in leastEngagedArray">
+                            <td>
+                                <a v-bind:href="member.url">                                                   
+                                    {{member.last_name+","}} 
+                                    <span if ="member.middle_name" >
+                                       {{member.middle_name}}
+                                    </span>
+                                    {{member.first_name }}
+                                </a>
+                            </td>
+                            <td>{{member.party}}</td>
+                            <td>{{member.missed_votes}}</td>
+                            <td>{{member.missed_votes_pct + "%"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <h2>Most Engaged (Top 10% Attendance)</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number of Missed Votes</th>
-                        <th>% Missed</th>
-                    </tr>
-                </thead>
-                <tbody id ="most_engaged_table">
-                    <tr v-for="member in mostEngagedArray">
-                        <td>
-                            <a v-bind:href="member.url">                                                   
-                                {{member.last_name+","}} 
-                                <span if ="member.middle_name" >
-                                   {{member.middle_name}}
-                                </span>
-                                {{member.first_name }}
-                            </a>
-                        </td>
-                        <td>{{member.party}}</td>
-                        <td>{{member.missed_votes}}</td>
-                        <td>{{member.missed_votes_pct + "%"}}</td>
-                    </tr>
-                </tbody>
-            </table>
+                <h2>Most Engaged (Top 10% Attendance)</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Party</th>
+                            <th>Number of Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody id ="most_engaged_table">
+                        <tr v-for="member in mostEngagedArray">
+                            <td>
+                                <a v-bind:href="member.url">                                                   
+                                    {{member.last_name+","}} 
+                                    <span if ="member.middle_name" >
+                                       {{member.middle_name}}
+                                    </span>
+                                    {{member.first_name }}
+                                </a>
+                            </td>
+                            <td>{{member.party}}</td>
+                            <td>{{member.missed_votes}}</td>
+                            <td>{{member.missed_votes_pct + "%"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
     </div> 
     <div class="container footer">
             <div>

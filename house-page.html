@@ -32,52 +32,52 @@
                     </div>
           </div>
           <div class ="vueContainer" v-if="showVue">
-           <form class = "container  form-horizontal">
-                <div class ="row"> <!-- better to use other attributes, like FLEX -->
-                    <div class="col-sm-2"><p>Filter by Party:</p> </div>
-                    <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
-                    <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
-                    <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
-                    <div class="col-sm-4">Filter by state: 
-                        <select id ="stateSelector" v-on:change="filter">
-                           <option value="all">-All-</option>
-                            <option v-for="state in states" :value="state">{{state}}</option>
-                        </select>
-                    </div>
-                 </div>
-            </form>
+               <form class = "container  form-horizontal">
+                    <div class ="row"> <!-- better to use other attributes, like FLEX -->
+                        <div class="col-sm-2"><p>Filter by Party:</p> </div>
+                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
+                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
+                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
+                        <div class="col-sm-4">Filter by state: 
+                            <select id ="stateSelector" v-on:change="filter">
+                               <option value="all">-All-</option>
+                                <option v-for="state in states" :value="state">{{state}}</option>
+                            </select>
+                        </div>
+                     </div>
+                </form>
 
 
-            <div class="container tableContainer">
-                <div class="row">
-                     <div class="col-sm-12">
-                       <!-- it works only over the table, not over the table body, WHY? --> 
-                         <table id="tableHeader" class="table table-hover">
-                            <thead>
-                                <th>Name</th>
-                                <th>Party</th>
-                                <th>State</th>
-                                <th>Years in Office</th>
-                                <th>Votes with Party</th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="member in members">
-                                  <td>
-                                      <a v-bind:href="member.url">{{member.last_name+","}} 
-                                          <span v-if="member.middle_name"> {{member.middle_name}}</span>     {{member.first_name }}
-                                      </a>
-                                  </td>
-                                  <td>{{member.party}}</td>
-                                  <td>{{member.state}}</td>
-                                  <td>{{member.seniority}}</td>
-                                  <td>{{member.votes_with_party_pct + "%"}}</td>
-                                </tr>
-                            </tbody>
-                          </table>
-                         
+                <div class="container tableContainer">
+                    <div class="row">
+                         <div class="col-sm-12">
+                           <!-- it works only over the table, not over the table body, WHY? --> 
+                             <table id="tableHeader" class="table table-hover">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Party</th>
+                                    <th>State</th>
+                                    <th>Years in Office</th>
+                                    <th>Votes with Party</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="member in members">
+                                      <td>
+                                          <a v-bind:href="member.url">{{member.last_name+","}} 
+                                              <span v-if="member.middle_name"> {{member.middle_name}}</span>     {{member.first_name }}
+                                          </a>
+                                      </td>
+                                      <td>{{member.party}}</td>
+                                      <td>{{member.state}}</td>
+                                      <td>{{member.seniority}}</td>
+                                      <td>{{member.votes_with_party_pct + "%"}}</td>
+                                    </tr>
+                                </tbody>
+                              </table>
+
+                        </div>
                     </div>
                 </div>
-            </div>
        </div>
  </div>  
         <div class="container footer">

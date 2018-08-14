@@ -36,21 +36,20 @@ var app = new Vue({
                     url = "https://api.myjson.com/bins/w5j7d"
                 }
                 $.getJSON(url, function(obj){
-                console.log("now I have the data")
-                app.members = obj.results[0].members; // so i get the array "members" from the JSON url
-                app.allMembers = app.members; // here is set the content of "allMembers" to the one of "members"
-                app.members.forEach(function(oneGuy){ //I fill the "state" array
-                    if(!app.states.includes(oneGuy.state)){
-                    app.states.push(oneGuy.state)
+                    console.log("now I have the data")
+                    app.members = obj.results[0].members; // so i get the array "members" from the JSON url
+                    app.allMembers = app.members; // here is set the content of "allMembers" to the one of "members"
+                    app.members.forEach(function(oneGuy){ //I fill the "state" array
+                        if(!app.states.includes(oneGuy.state)){
+                        app.states.push(oneGuy.state)
+                        }
+                    })
+                    app.states.sort()//I sort the "states" array
+                    //the following condition is to hide the Vue element untile the data are loaded;see HTML
+                    if (app.members.length > 0){
+                        app.showVue = true;
                     }
-                })
-                app.states.sort()//I sort the "states" array
-                //the following condition is to hide the Vue element untile the data are loaded;see HTML
-                if (app.members.length > 0){
-                app.showVue = true;
-                }
-                console.log(app.members)
-                console.log(app.states)
+
                 })
             },
             

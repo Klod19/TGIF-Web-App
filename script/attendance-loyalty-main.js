@@ -8,27 +8,27 @@
 var app = new Vue({
         el: '#vueApp',
         data: {
-            members: [],
             allMembers: [],//backup array;will have the same content as "members", but it doesn't get played with
-            states: [],
             
             demNumber : 0,
             repNumber : 0,
             indNumber : 0,
+            
             percDemLoyalVotes : 0,
             percRepLoyalVotes : 0,
             percIndLoyalVotes : 0,
+            
             perDemMissed: 0,
             percRepMissed: 0,
             percIndMissed : 0,
+            
             leastLoyalArray: [],
             mostLoyalArray: [],
+            
             leastEngagedArray : [],
             mostEngagedArray : [],
-    
-                
+      
             showVue: false,
-            templateRep : '<div>{{ message }}</div>'
         },
         
         created: function(){ //I initialize the page calling "getData", which makes the starting table 
@@ -49,12 +49,14 @@ var app = new Vue({
                 
                 $.getJSON(url, function(obj){
                     var totalMembers;  //total number of reps/senators
-                    console.log(app.allMembers);
                     totalMembers = obj.results[0].members;
                     app.allMembers = totalMembers;
-                    console.log(app.allMembers)
-                    app.getMembersStatistics(totalMembers);
-                    })
+                    app.get_glance_tables(totalMembers);
+                    app.get_engaged_loyal(totalMembers);
+                    if (app.allMembers.length > 0){
+                        app.showVue = true;
+                    }
+                })
             },
 
             
@@ -63,27 +65,26 @@ var app = new Vue({
                 this.isVisible =!this.isVisible
             },
             
-
-            getMembersStatistics : function(totalMembers) {
-                console.log(totalMembers.length);
-                var all_members = app.ratesToNames(totalMembers)
-                console.log(totalMembers.length);
-                console.log(all_members.length);
-                
+            
+            get_glance_tables : function(array) {
+                var all_members = app.ratesToNames(array)
+                //missed votes per party, and the total of missed votes
                 var demMissed = 0;
                 var repMissed = 0;
                 var indMissed = 0;
                 var totalMissed = 0;
                 
+                //following: the loyal votes, divided per party
                 var demLoyal = 0;
+                var demTotal =0;
                 var repLoyal = 0;
-                var indLoyal = 0;
-                var totalVotes = 0;
                 
-                var demArray=[];
-                var repArray=[];
-                var indArray=[];
-                //this loop makes 3 arrays based on party AND updates the counter
+                //the following are the sums of the numbers of votes done by each party;
+                //useful to calculate the party loyalty
+                var repTotal = 0;
+                var indLoyal = 0;
+                var indTotal = 0;
+                
                 all_members.forEach(function(member){
                     if(member.totalVotesWithParty === undefined){
                         console.log("UNDEFINED VOTES WITH PARTY!")
@@ -94,130 +95,75 @@ var app = new Vue({
                         app.demNumber++
                         demMissed = demMissed + parseFloat(member.missed_votes);
                         demLoyal = demLoyal + member.totalVotesWithParty;
+                        demTotal = demTotal + parseFloat(member.total_votes);
                     }
                     if(member.party == "R"){
                         app.repNumber++
                         repMissed = repMissed + parseFloat(member.missed_votes);
                         repLoyal = repLoyal + member.totalVotesWithParty;
+                        repTotal = repTotal + parseFloat(member.total_votes);
 
                     }
                     if(member.party == "I"){
                         app.indNumber++
                         indMissed = indMissed + parseFloat(member.missed_votes);
                         indLoyal = indLoyal + member.totalVotesWithParty;
+                        indTotal = indTotal + parseFloat(member.total_votes);
 
                     }
                     totalMissed = totalMissed + parseFloat(member.missed_votes);
-                    totalVotes = totalVotes + member.totalVotesWithParty;
-                    
                 })
-                            
+
+                
                 //ENGAGEMENT ON THE GLANCE TABLE
                 app.percDemMissed = app.get_percent(demMissed, totalMissed);
                 app.percRepMissed = app.get_percent(repMissed, totalMissed);
                 app.percIndMissed = app.get_percent(indMissed, totalMissed);
-                console.log(app.percDemMissed);
                 
                 //LOYALTY ON THE GLANCE TABLE
-                console.log(demLoyal);
-                var dem_loyalty = app.get_percent(demLoyal, totalVotes);
-                var rep_loyalty = app.get_percent(repLoyal, totalVotes);
-                var ind_loyalty = app.get_percent(indLoyal, totalVotes);
-                //TO report it: if loyalty = 0, make "-" instead
-                console.log("dem_loyalty: " + dem_loyalty);
-                console.log("rep_loyalty: " + rep_loyalty);
-                console.log("ind_loyalty: " + ind_loyalty);
+                app.percDemLoyalVotes = app.get_percent(demLoyal, demTotal);
+                app.percRepLoyalVotes = app.get_percent(repLoyal, repTotal);
+                app.percIndLoyalVotes = app.get_percent(indLoyal, indTotal);
                 
+            },
+            
+            get_engaged_loyal: function (array) {
+                //get rid of the guys with 0 total votes
+                var no_zero_votes = array.filter(m => m.total_votes != "0");
+                //NOW: TABLES (ENGAGED AND LOYAL)
                 
-
-                
-                //the following gets the % loyalty and 
-//                avgLoyalty = app.getLoyalVotes(demArray)
-//                console.log("avgLoyalty dem")
-//                console.log(avgLoyalty)
-//                app.percDemLoyalVotes = avgLoyalty
-//                avgLoyalty = app.getLoyalVotes(repArray);
-//                app.percRepLoyalVotes = avgLoyalty;
-//                avgLoyalty = app.getLoyalVotes(indArray);
-//                app.percIndLoyalVotes = avgLoyalty;
-                
-                
-                  //NOW: get the least and most loyal : work on "test", a modified version of the original data
-                //these 3 are arrays, with rates connected to names
-                console.log(all_members);
-                
-                var sorted_engaged = all_members.sort(function(a, b) { 
+                //ENGAGED
+                var sorted_engaged = no_zero_votes.sort(function(a, b) { 
                     return parseFloat(a.missed_votes) - parseFloat(b.missed_votes);
                 })
-                
-                console.log(sorted_engaged)
-                // NOW I JUST GET THE FIRST 10% and LAST 10% out of sorted_test
+                //perc is OK also with loyalty
                 var perc = app.getTenPerc(sorted_engaged)
-                console.log(perc);
+                
                 app.mostEngagedArray = app.getLowestTenPerc(sorted_engaged, perc);
-//                most_engaged.map((m) => console.log(m.last_name + " " + m.missed_votes))
-
                 
                 app.leastEngagedArray = app.getHighestTenPerc(sorted_engaged, perc).reverse();
-//                least_engaged.reverse().map((m) => console.log(m.last_name + " " + m.missed_votes))
-               
-                var sorted_loyal = all_members.sort(function(a, b){
+                
+                //LOYAL
+                var sorted_loyal = no_zero_votes.sort(function(a, b){
                     return parseFloat(a.votes_with_party_pct) - parseFloat(b.votes_with_party_pct);
                 })
                 
-                console.log("10 % LEAST LOYAL:")
-                console.log(app.getLowestTenPerc(sorted_loyal, perc));
-                var least_loyal = app.getLowestTenPerc(sorted_loyal, perc)
-//                least_loyal.map(m => console.log(sorted_loyal.indexOf(m) +" " +m.last_name + " " + m.votes_with_party_pct));
-                console.log(least_loyal.length);
+                app.leastLoyalArray = app.getLowestTenPerc(sorted_loyal, perc)
                 
-                console.log("10% most loyal")
-                var most_loyal = app.getHighestTenPerc(sorted_loyal, perc);
-//                most_loyal.reverse().map(m => console.log(sorted_loyal.indexOf(m) + " " +m.last_name+" "+m.votes_with_party_pct));
-                console.log(most_loyal.length);
-                
-                
-            
+                app.mostLoyalArray = app.getHighestTenPerc(sorted_loyal, perc).reverse();     
             },
 
-
             
-            //Change the following, for it to process the array obtained with getData
+            // the following to processes the array obtained with getData, adding the total of loyal votes
+            // to each Object "member"
             ratesToNames: function(array) {
                 array.forEach(function(member){
                     var party_votes = parseFloat(member.votes_with_party_pct);
                     var total_votes = parseFloat(member.total_votes);
-//                   I exclude members whose total votes are 0 and not Independent
-//                    if (member.total_votes === "0" && member.party != "I"){
-//                        console.log(member);
-//                        var index = array.indexOf(member)
-//                        array.splice(index, 1);
-//                    }
                     member["totalVotesWithParty"] = Math.round((party_votes*total_votes)/100);
                })
                 return array;
-            },
-            
-            getLoyalVotes: function (array) {
-                var sumVotes = 0;
-                var percArray = []
-                array.forEach(function(member){
-                    sumVotes = sumVotes + parseFloat(member.votes_with_party_pct)//because in the house JSON data the value of "votes_with_party_pct" is a string
-                    percArray.push(member.votes_with_party_pct);
-                })
-                var avgLoyalty = Math.round(sumVotes/array.length);
-                if (array.length == 0){
-                    avgLoyalty = "-"
-                    return avgLoyalty
-                }
-                else {
-                    console.log("AVG LOYALTY: " + avgLoyalty);
-                    return avgLoyalty+"%"
-                }
-            },
-
-            
-            
+            },       
             
             //this function gets the 10% of the length of an array
             getTenPerc: function(array){
@@ -257,6 +203,9 @@ var app = new Vue({
             },
             
             get_percent: function (quantity, total){
+                if (quantity == 0 || total == 0){
+                    return "-"
+                }
                 var result = (quantity * 100)/total
                 return result.toFixed(2) + "%"
             
@@ -268,35 +217,3 @@ var app = new Vue({
         /*computed:{} i use this when i want something to load on changes; when something happens on the page, the code here doesn't need to be called (like for "methods"), it'll start; for example, useful for filters where we write something
         */
 
-
-
-var cars = [
-
-                    {
-                        name: "Honda",
-                        speed: 80
-                    },
-
-                    {
-                        name: "BMW",
-                        speed: 180
-                    },
-
-                    {
-                        name: "Trabi",
-                        speed: 40
-                    },
-
-                    {
-                        name: "Ferrari",
-                        speed: 200
-                    }
-                ]
-
-
-                cars.sort(function(a, b) { 
-                    return a.speed - b.speed;
-                })
-
-                for(var i in cars)
-                    console.log(cars[i].name) // Trabi Honda BMW Ferrari 
