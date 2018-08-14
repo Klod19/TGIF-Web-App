@@ -18,6 +18,9 @@ var app = new Vue({
                     percDemLoyalVotes : 0,
                     percRepLoyalVotes : 0,
                     percIndLoyalVotes : 0,
+                    perDemMissed: 0,
+                    percRepMissed: 0,
+                    percIndMissed : 0,
                     leastLoyalArray: [],
                     mostLoyalArray: [],
                     leastEngagedArray : [],
@@ -51,34 +54,6 @@ var app = new Vue({
                     app.allMembers = totalMembers;
                     console.log(app.allMembers)
                     app.getMembersStatistics(totalMembers);
-                    // callin the function 3 times, to obtain the first table
-//                    makeGlanceTable(statistics.repNumber, statistics.percRepLoyalVotes, "repRow")//i can set a string as paramether!!!
-//                    makeGlanceTable(statistics.demNumber, statistics.percDemLoyalVotes, "demRow")
-//                    makeGlanceTable(statistics.indNumber, statistics.percIndLoyalVotes, "indRow")
-                    // a) I get an array with names, loyal vote % and number, party affiliation
-                    var ratedArray = app.ratesToNames(totalMembers);
-                    // b) I sort this array in a crescent order
-                    var sortedArray = ratedArray.sort(app.sortNumber);
-                    // c) I get the 10% of that sorted array
-                    var tenPerc = app.getTenPerc(sortedArray);
-                    // d) I get the first 10% of the sorted array (i.e. the least loyal) and the last 10% of the same array (i.e. the most loyal)
-                    var wholeLeastLoyal = app.getLowestTenPerc(sortedArray, tenPerc);
-                    var wholeMostLoyal = app.getHighestTenPerc(sortedArray, tenPerc);
-                    // e) I want to sort the most loyal in a decreasing order:
-                    var sortedMostLoyal = app.decreasingOrder(wholeMostLoyal);
-                    app.storeLoyals(wholeLeastLoyal, sortedMostLoyal);
-                    //now to sort the array in an increasing order:
-                    var missedVotesArray = app.missedVotesToNames(totalMembers);
-                    // now I have the least engaged sorted in a decreasing order   
-                    var sortedMissedArray = missedVotesArray.sort(app.sortNumber)
-                    var leastEngaged = app.getHighestTenPerc(sortedMissedArray, tenPerc);
-                    app.missedVotesToNames(totalMembers)    
-                    var sortedLeastEngaged = app.decreasingOrder(leastEngaged);   
-                    // now the most engaged (the first 10% of the array)
-                    var mostEngaged = app.getLowestTenPerc(sortedMissedArray, tenPerc);
-                    app.storeEngaged(sortedLeastEngaged, mostEngaged);
-//                    buildTables()
-                    console.log(ratedArray);
                     })
             },
 
@@ -90,25 +65,58 @@ var app = new Vue({
             
 
             getMembersStatistics : function(totalMembers) {
+                var demMissed = 0;
+                var repMissed = 0;
+                var indMissed = 0;
+                var totalMissed = 0;
                 var demArray=[];
                 var repArray=[];
                 var indArray=[];
-                
                 //this loop makes 3 arrays based on party AND updates the counter
-                for (var i = 0; i < totalMembers.length; i++){ 
-                    if (totalMembers[i].party == "D"){
-                        demArray.push(totalMembers[i]);
+                totalMembers.forEach(function(member){
+                    if(member.party == "D"){
                         app.demNumber++
+                        demMissed = demMissed + parseFloat(member.missed_votes);
                     }
-                    if (totalMembers[i].party == "R") {
-                        repArray.push(totalMembers[i]);
+                    if(member.party == "R"){
                         app.repNumber++
+                        repMissed = repMissed + parseFloat(member.missed_votes);
                     }
-                    if (totalMembers[i].party == "I") {
-                        indArray.push(totalMembers[i]);
+                    if(member.party == "I"){
                         app.indNumber++
+                        indMissed = indMissed + parseFloat(member.missed_votes);
                     }
-                }
+                    totalMissed = totalMissed + parseFloat(member.missed_votes);
+                    
+                })
+                            
+//                console.log("demMissed: " + demMissed);            
+//                console.log("repMissed: " + repMissed);            
+//                console.log("indMissed: " + indMissed);            
+//                console.log("totalMissed: " + totalMissed);
+//                var percDem = app.get_percent(demMissed, totalMissed);
+//                console.log(percDem);
+//                var percRep = app.get_percent(repMissed, totalMissed);
+//                console.log(percRep);
+                app.percDemMissed = app.get_percent(demMissed, totalMissed);
+                app.percRepMissed = app.get_percent(repMissed, totalMissed);
+                app.percIndMissed = app.get_percent(indMissed, totalMissed);
+                console.log(app.percDemMissed);
+                
+                
+
+                
+                //the following gets the % loyalty and 
+//                avgLoyalty = app.getLoyalVotes(demArray)
+//                console.log("avgLoyalty dem")
+//                console.log(avgLoyalty)
+//                app.percDemLoyalVotes = avgLoyalty
+//                avgLoyalty = app.getLoyalVotes(repArray);
+//                app.percRepLoyalVotes = avgLoyalty;
+//                avgLoyalty = app.getLoyalVotes(indArray);
+//                app.percIndLoyalVotes = avgLoyalty;
+                
+                
                   //NOW: get the least and most loyal : work on "test", a modified version of the original data
                 //these 3 are arrays, with rates connected to names
                 var all_members = app.ratesToNames(totalMembers)
@@ -136,57 +144,34 @@ var app = new Vue({
                 console.log("10 % LEAST LOYAL:")
                 console.log(app.getLowestTenPerc(sorted_loyal, perc));
                 var least_loyal = app.getLowestTenPerc(sorted_loyal, perc)
-                least_loyal.map(m => console.log(sorted_loyal.indexOf(m) +" " +m.last_name + " " + m.votes_with_party_pct));
+//                least_loyal.map(m => console.log(sorted_loyal.indexOf(m) +" " +m.last_name + " " + m.votes_with_party_pct));
                 console.log(least_loyal.length);
                 
                 console.log("10% most loyal")
                 var most_loyal = app.getHighestTenPerc(sorted_loyal, perc);
-                most_loyal.reverse().map(m => console.log(sorted_loyal.indexOf(m) + " " +m.last_name+" "+m.votes_with_party_pct));
+//                most_loyal.reverse().map(m => console.log(sorted_loyal.indexOf(m) + " " +m.last_name+" "+m.votes_with_party_pct));
                 console.log(most_loyal.length);
                 
                 
-                
-//                app.getLoyalVotes(sorted_test);
-                
-                var nameRatesDem = app.ratesToNames(demArray);
-                var nameRatesRep = app.ratesToNames(repArray);
-                var nameRatesInd = app.ratesToNames(indArray);
-                var sortedDem = nameRatesDem.sort(app.sortNumber);
-                var sortedRep = nameRatesRep.sort(app.sortNumber);
-                var sortedInd = nameRatesInd.sort(app.sortNumber);
-
-                // now get the 10% of the 3 sorted arrays;
-                var tenPercDem = app.getTenPerc(sortedDem);
-                var tenPercRep = app.getTenPerc(sortedRep);
-                var tenPercInd = app.getTenPerc(sortedInd);
-                //the following get the lowest 10% out of each of the 3 arrays
-
-
-                // the following 3 arrays store the % of votes with party; useful to calculate the loyalty 
-            //    var percDem =[];
-            //    var percRep = [];
-            //    var percInd = [];
-                var avgLoyalty = 0;
-                console.log("here the demArray:")
-                console.log(demArray)
-                console.log(indArray);
-
-                avgLoyalty = app.getLoyalVotes(demArray)
-                console.log("avgLoyalty dem")
-                console.log(avgLoyalty)
-                app.percDemLoyalVotes = avgLoyalty
-                avgLoyalty = app.getLoyalVotes(repArray);
-                app.percRepLoyalVotes = avgLoyalty;
-                avgLoyalty = app.getLoyalVotes(indArray);
-                app.percIndLoyalVotes = avgLoyalty;
-
-                app.getLowestTenPerc(sortedDem, tenPercDem)
-                app.getLowestTenPerc(sortedRep, tenPercRep)
-                app.getLowestTenPerc(sortedInd, tenPercInd)
-                // it works
+            
             },
 
 
+            
+            //Change the following, for it to process the array obtained with getData
+            ratesToNames: function(array) {
+                console.log(array);
+                array.forEach(function(member){
+                    member["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
+                    // I exclude members whose total votes are 0 and not Independent
+                    if (member.total_votes == 0 && member.party != "I"){  
+                        var index = array.indexOf(member)
+                        array.splice(index, 1);
+                      }
+               })
+                return array;
+            },
+            
             getLoyalVotes: function (array) {
                 var sumVotes = 0;
                 var percArray = []
@@ -205,58 +190,9 @@ var app = new Vue({
                 }
             },
 
-
-
-
-            // this function connects NAMES (of the whole group) with : a) total votes with party b) % of votes with party c) party affiliation
-            //MAKE AN OBJECT OUT OF IT
-//            ratesToNames: function(array) {
-//                console.log(array);
-//                var namesAndRates = [];
-//                array.forEach(function(member){
-//                    var obj ={}
-//                    obj["first_name"] = member.first_name;
-//                    obj["last_name"] = member.last_name;
-//                    if(member.middle_name){
-//                        obj["middle_name"] = member.middle_name;
-//                    }
-//                    obj["party"] = member.party;
-//                    obj["url"] = member.url;
-//                    obj["totalMissed"] = member.missed_votes;
-//                    obj["percMissed"]= member.missed_votes_pct;
-//                    obj["percVotesWithParty"] = member.votes_with_party_pct;
-//                    obj["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
-//                    // I exclude members whose total votes are 0 and not Independent
-//                    if (member.total_votes != 0 || member.party == "I"){  
-//                        namesAndRates.push(obj)
-//                      }
-//
-//               })
-//                console.log(namesAndRates);
-//                return namesAndRates;
-//            },
             
-            //Change the following, for it to process the array obtained with getDAta
-            ratesToNames: function(array) {
-                console.log(array);
-                array.forEach(function(member){
-                    member["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
-                    // I exclude members whose total votes are 0 and not Independent
-                    if (member.total_votes == 0 && member.party != "I"){  
-                        var index = array.indexOf(member)
-                        array.splice(index, 1);
-                      }
-               })
-                return array;
-            },
             
-
-
-
-            // this funtion sort the integers in an array in an increasing order
-            sortNumber: function (a, b) {
-                return a.totalMissed - b.totalMissed; //here I'm using an index  "3" because I'm working with the value corresponding to index "3" of the arrays forming the elements of the sorted array 
-            },
+            
             //this function gets the 10% of the length of an array
             getTenPerc: function(array){
                 var tenPerc = Math.round((10*array.length)/100)
@@ -283,120 +219,28 @@ var app = new Vue({
                 })
                 return highestTenPerc;
             },
-            
-
-
-
-
-            //the following gets the overall 10% that voted least loyal to their parties
-
-
-
-            //this function puts the least loyal and most loyal arrays in their respective keys of the objcet "statistics"
-            storeLoyals: function (array1, array2){
-                array1.forEach(function(member1){
-                app.leastLoyalArray.push(member1)
-                })
-                array2.forEach(function(member2){    
-                app.mostLoyalArray.push(member2);    
-                })
-            },
-
-
-            // NOW to get the number of missed votes and the % of missed votes per member
-            // I start getting a whole array with : names, party affiliation, total missed votes, % of missed votes
-            missedVotesToNames: function(array) {
-                var namesAndVotes =[];
-                array.forEach(function(member){
-                    var name = member.last_name + "," + " " + member.first_name
-                    var partyId = member.party;
-                    var totalMissed = member.missed_votes;
-                    var percMissed= member.missed_votes_pct;
-                    namesAndVotes.push([name, partyId, totalMissed, percMissed ]);
-                    })
-                    return namesAndVotes;
-            },
-
-
 
             // i want to sort the least engaged in a decreasing order; write a function for this
             decreasingOrder: function (array){
-            array.sort(function(a, b)
+                array.sort(function(a, b)
                        {
                         return b[3] - a[3];
                        });
 
                 return array
             },
-
-
-
-            //now to store the 2 arrays least and most engaged in "data"
-            storeEngaged: function(array1, array2) {
-                array1.forEach(function(member1){
-                    app.leastEngagedArray.push(member1);
-                })
-
-
-                array2.forEach(function(member2){
-                    app.mostEngagedArray.push(member2);
-                })
-                console.log (array2)
-                console.log(app.mostEngagedArray);
-
+            
+            get_percent: function (quantity, total){
+                var result = (quantity * 100)/total
+                return result.toFixed(2) + "%"
+            
             },
+
         //methods end    
         }
 })
         /*computed:{} i use this when i want something to load on changes; when something happens on the page, the code here doesn't need to be called (like for "methods"), it'll start; for example, useful for filters where we write something
         */
-
-
-
-
-            // now to create the first simple table, common to the 2 pages
-            //this function makes the table
-//            function makeGlanceTable(num, perc, partyRow) {
-//                var row = document.getElementById(partyRow);
-//                for(var i = 0; i < 1; i ++){
-//                var dataNum = document.createElement("TD");
-//                dataNum.innerHTML = num; 
-//                row.append(dataNum)
-//                var dataPerc = document.createElement("TD")
-//                dataPerc.innerHTML = perc
-//                row.append(dataPerc) 
-//                }
-//            }
-
-            //now the least loyal and most loyal table
-//            function makeTable(mainArray, tableId){ // I can try to use a forEach instead
-//                for (var k = 0; k < mainArray.length; k++){ 
-//                    var table = document.getElementById(tableId);
-//                    var row = document.createElement("TR");
-//                    table.append(row);
-//                    for(var i = 0; i < 4; i ++){
-//                        var data = document.createElement("TD");
-//                        data.innerHTML = mainArray[k][i];
-//                        row.append(data)
-//                    }
-//                }
-//            }
-
-//            buildTables(){ // need an if condtion otherwise the HTML will look for 2 lines, then the next HTML for 2 lines NOT EXISTING in its code
-//                if(document.getElementById("least_loyal_table") == null){
-//
-//                // calls the function to make the 2 tables in the 2 different pages
-//                makeTable(statistics.leastEngagedArray, "least_engaged_table");
-//                makeTable(statistics.mostEngagedArray, "most_engaged_table");
-//
-//                }else{
-//
-//                makeTable(statistics.leastLoyalArray, "least_loyal_table");
-//                makeTable(statistics.mostLoyalArray, "most_loyal_table");
-//                }
-//            }
-
-   
 
 
 
