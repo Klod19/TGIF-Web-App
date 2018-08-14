@@ -12,19 +12,19 @@ var app = new Vue({
             allMembers: [],//backup array;will have the same content as "members", but it doesn't get played with
             states: [],
             
-                    demNumber : 0,
-                    repNumber : 0,
-                    indNumber : 0,
-                    percDemLoyalVotes : 0,
-                    percRepLoyalVotes : 0,
-                    percIndLoyalVotes : 0,
-                    perDemMissed: 0,
-                    percRepMissed: 0,
-                    percIndMissed : 0,
-                    leastLoyalArray: [],
-                    mostLoyalArray: [],
-                    leastEngagedArray : [],
-                    mostEngagedArray : [],
+            demNumber : 0,
+            repNumber : 0,
+            indNumber : 0,
+            percDemLoyalVotes : 0,
+            percRepLoyalVotes : 0,
+            percIndLoyalVotes : 0,
+            perDemMissed: 0,
+            percRepMissed: 0,
+            percIndMissed : 0,
+            leastLoyalArray: [],
+            mostLoyalArray: [],
+            leastEngagedArray : [],
+            mostEngagedArray : [],
     
                 
             showVue: false,
@@ -65,43 +65,68 @@ var app = new Vue({
             
 
             getMembersStatistics : function(totalMembers) {
+                console.log(totalMembers.length);
+                var all_members = app.ratesToNames(totalMembers)
+                console.log(totalMembers.length);
+                console.log(all_members.length);
+                
                 var demMissed = 0;
                 var repMissed = 0;
                 var indMissed = 0;
                 var totalMissed = 0;
+                
+                var demLoyal = 0;
+                var repLoyal = 0;
+                var indLoyal = 0;
+                var totalVotes = 0;
+                
                 var demArray=[];
                 var repArray=[];
                 var indArray=[];
                 //this loop makes 3 arrays based on party AND updates the counter
-                totalMembers.forEach(function(member){
+                all_members.forEach(function(member){
+                    if(member.totalVotesWithParty === undefined){
+                        console.log("UNDEFINED VOTES WITH PARTY!")
+                        console.log(member);
+                    }
+                    
                     if(member.party == "D"){
                         app.demNumber++
                         demMissed = demMissed + parseFloat(member.missed_votes);
+                        demLoyal = demLoyal + member.totalVotesWithParty;
                     }
                     if(member.party == "R"){
                         app.repNumber++
                         repMissed = repMissed + parseFloat(member.missed_votes);
+                        repLoyal = repLoyal + member.totalVotesWithParty;
+
                     }
                     if(member.party == "I"){
                         app.indNumber++
                         indMissed = indMissed + parseFloat(member.missed_votes);
+                        indLoyal = indLoyal + member.totalVotesWithParty;
+
                     }
                     totalMissed = totalMissed + parseFloat(member.missed_votes);
+                    totalVotes = totalVotes + member.totalVotesWithParty;
                     
                 })
                             
-//                console.log("demMissed: " + demMissed);            
-//                console.log("repMissed: " + repMissed);            
-//                console.log("indMissed: " + indMissed);            
-//                console.log("totalMissed: " + totalMissed);
-//                var percDem = app.get_percent(demMissed, totalMissed);
-//                console.log(percDem);
-//                var percRep = app.get_percent(repMissed, totalMissed);
-//                console.log(percRep);
+                //ENGAGEMENT ON THE GLANCE TABLE
                 app.percDemMissed = app.get_percent(demMissed, totalMissed);
                 app.percRepMissed = app.get_percent(repMissed, totalMissed);
                 app.percIndMissed = app.get_percent(indMissed, totalMissed);
                 console.log(app.percDemMissed);
+                
+                //LOYALTY ON THE GLANCE TABLE
+                console.log(demLoyal);
+                var dem_loyalty = app.get_percent(demLoyal, totalVotes);
+                var rep_loyalty = app.get_percent(repLoyal, totalVotes);
+                var ind_loyalty = app.get_percent(indLoyal, totalVotes);
+                //TO report it: if loyalty = 0, make "-" instead
+                console.log("dem_loyalty: " + dem_loyalty);
+                console.log("rep_loyalty: " + rep_loyalty);
+                console.log("ind_loyalty: " + ind_loyalty);
                 
                 
 
@@ -119,7 +144,6 @@ var app = new Vue({
                 
                   //NOW: get the least and most loyal : work on "test", a modified version of the original data
                 //these 3 are arrays, with rates connected to names
-                var all_members = app.ratesToNames(totalMembers)
                 console.log(all_members);
                 
                 var sorted_engaged = all_members.sort(function(a, b) { 
@@ -160,14 +184,16 @@ var app = new Vue({
             
             //Change the following, for it to process the array obtained with getData
             ratesToNames: function(array) {
-                console.log(array);
                 array.forEach(function(member){
-                    member["totalVotesWithParty"] = Math.round((member.votes_with_party_pct*member.total_votes))/100;
-                    // I exclude members whose total votes are 0 and not Independent
-                    if (member.total_votes == 0 && member.party != "I"){  
-                        var index = array.indexOf(member)
-                        array.splice(index, 1);
-                      }
+                    var party_votes = parseFloat(member.votes_with_party_pct);
+                    var total_votes = parseFloat(member.total_votes);
+//                   I exclude members whose total votes are 0 and not Independent
+//                    if (member.total_votes === "0" && member.party != "I"){
+//                        console.log(member);
+//                        var index = array.indexOf(member)
+//                        array.splice(index, 1);
+//                    }
+                    member["totalVotesWithParty"] = Math.round((party_votes*total_votes)/100);
                })
                 return array;
             },
