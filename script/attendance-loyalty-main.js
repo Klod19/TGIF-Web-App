@@ -134,8 +134,18 @@ var app = new Vue({
                 })
                 
                 console.log("10 % LEAST LOYAL:")
-                sorted_loyal.map(m => console.log(m.last_name + " " + m.votes_with_party_pct));
                 console.log(app.getLowestTenPerc(sorted_loyal, perc));
+                var least_loyal = app.getLowestTenPerc(sorted_loyal, perc)
+                least_loyal.map(m => console.log(sorted_loyal.indexOf(m) +" " +m.last_name + " " + m.votes_with_party_pct));
+                console.log(least_loyal.length);
+                
+                console.log("10% most loyal")
+                var most_loyal = app.getHighestTenPerc(sorted_loyal, perc);
+                most_loyal.reverse().map(m => console.log(sorted_loyal.indexOf(m) + " " +m.last_name+" "+m.votes_with_party_pct));
+                console.log(most_loyal.length);
+                
+                
+                
 //                app.getLoyalVotes(sorted_test);
                 
                 var nameRatesDem = app.ratesToNames(demArray);
