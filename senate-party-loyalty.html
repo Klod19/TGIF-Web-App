@@ -13,7 +13,29 @@
     
     <body id = "senate_page">
         <div id="header"> </div>
-        <!--Table container-->
+        <div id="vueApp">
+            <div class="container waitbox" v-if="allMembers.length == 0" >
+                <div class="row upperContent">   
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+            <div class ="container" v-if="showVue == true">
+                <div class = "row">
+                    <div class="col-md-6">
+                        <div class="container explContainer"></div>
+                    </div>
+                    <div class="col-md-6 glanceContainer"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6"></div>
+                </div>
+            </div>
+            
+            
+        </div>
         <div class="container textContainer">
             <h2>Party Loyalty</h2>
             <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
