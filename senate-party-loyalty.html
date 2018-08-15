@@ -24,82 +24,115 @@
             <div class ="container" v-if="showVue == true">
                 <div class = "row">
                     <div class="col-md-6">
-                        <div class="container explContainer"></div>
+                        <div class="container explContainer">
+                            <h2>Party Loyalty -Senate</h2>
+                            <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+                        </div>
                     </div>
-                    <div class="col-md-6 glanceContainer"></div>
+                    <div class="col-md-6 glanceContainer">
+                            <h3>Party loyalty in the Senate at a glance</h3>
+                            <table class ="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Party</th>
+                                        <th>Number of Reps</th>
+                                        <th>% Voted with Party</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="repRow">
+                                        <td>Republican</td>
+                                        <td>{{repNumber}}</td>
+                                        <td>{{percRepLoyalVotes}}</td>    
+                                    </tr>
+                                    <tr id="demRow">
+                                        <td>Democrat</td>
+                                        <td>{{demNumber}}</td>
+                                        <td>{{percDemLoyalVotes}}</td>               
+                                    </tr>
+                                    <tr id="indRow">
+                                        <td>Independent</td>
+                                        <td>{{indNumber}}</td>
+                                        <td>{{percIndLoyalVotes}}</td>        
+                                    </tr>
+                                </tbody>
+                             </table>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <h3>Least Loyal (Bottom 10% of Party Loyalty)</h3>
+                        <table class= "table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Party</th>
+                                    <th>Number of Party Votes</th>
+                                    <th>% of Party Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="least_loyal_table">
+                                <tr v-for="member in leastLoyalArray">
+                                    <td>
+                                        <a v-bind:href="member.url">                                                   
+                                            {{member.last_name+","}} 
+                                            <span if ="member.middle_name" >
+                                               {{member.middle_name}}
+                                            </span>
+                                            {{member.first_name }}
+                                        </a>
+                                    </td>
+                                    <td>{{member.party}}</td>
+                                    <td>{{member.totalVotesWithParty}}</td>
+                                    <td>{{member.votes_with_party_pct + "%"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Most Loyal (Top 10% of Party Loyalty)</h3>
+                        <table class = "table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Party</th>
+                                    <th>Number of Party Votes</th>
+                                    <th>% of Party Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="most_loyal_table">
+                                <tr v-for="member in mostLoyalArray">
+                                    <td>
+                                        <a v-bind:href="member.url">                                                   
+                                            {{member.last_name+","}} 
+                                            <span if ="member.middle_name" >
+                                               {{member.middle_name}}
+                                            </span>
+                                            {{member.first_name }}
+                                        </a>
+                                    </td>
+                                    <td>{{member.party}}</td>
+                                    <td>{{member.totalVotesWithParty}}</td>
+                                    <td>{{member.votes_with_party_pct + "%"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>  
+                    </div>
                 </div>
-            </div>
-            
-            
+            </div>      
         </div>
-        <div class="container textContainer">
-            <h2>Party Loyalty</h2>
-            <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
-    	    
-            <h2>Senate at a glance</h2>
-                <table class ="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Number of Reps</th>
-                        <th>% Voted with Party</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="repRow">
-                        <td>Republican</td>
-                        
-                    </tr>
-                    <tr id="demRow">
-                        <td>Democrat</td>
-                      
-                    </tr>
-                    <tr id="indRow">
-                        <td>Independent</td>
-                      
-                    </tr>
-                </tbody>
-            </table>
 
-            <h2>Least Loyal (Bottom 10% of Party)</h2>
-            <table class= "table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody id="least_loyal_table">
-                </tbody>
-            </table>
-
-            <h2>Most Loyal (Top 10% of Party)</h2>
-            <table class = "table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Party</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody id="most_loyal_table">
-                </tbody>
-            </table>
-    </div> 
-    <div class="container footer">
+        <div id ="footer"class="container footer">
              <div>
-             <p >powered by megaTURD | all rigths reserved</p>
-            </div>
-    </div>
+                 <p> TGIF | all rigths reserved</p>
+             </div>
+        </div>
     	<!-- BOOTSTRAP: jQuery Library-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Following: Vue link to load Vue library DEVELOPMENT MODE!!!  -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- FOLLOWING: PRODUCTION VERSION OF VUE, for when the website is deployed -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
     <!-- BOOTSTRAP: compiled Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- following line: my JS -->
