@@ -32,7 +32,8 @@ var app = new Vue({
                         app.states.push(member.state)
                         }
                     })
-                    app.states.sort()//I sort the "states" array
+                    //I sort the "states" array
+                    app.states.sort();
                     //the following condition is to hide the Vue element untile the data are loaded;see HTML
                     if (app.members.length > 0){
                         app.showVue = true;
