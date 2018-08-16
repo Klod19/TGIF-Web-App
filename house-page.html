@@ -33,12 +33,12 @@
           </div>
           <div class ="vueContainer" v-if="showVue">
                <form class = "container  form-horizontal">
-                    <div class ="row"> <!-- better to use other attributes, like FLEX -->
-                        <div class="col-sm-2"><p>Filter by Party:</p> </div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
-                        <div class="col-sm-4">Filter by state: 
+                    <div id = "filtersBox"> 
+                        <div ><p><b>Filter by Party:</b></p> </div>
+                        <div ><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
+                        <div ><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
+                        <div><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
+                        <div id ="state_filter"><b>Filter by state:</b> 
                             <select id ="stateSelector" v-on:change="filter">
                                <option value="all">-All-</option>
                                 <option v-for="state in states" :value="state">{{state}}</option>
@@ -46,7 +46,6 @@
                         </div>
                      </div>
                 </form>
-
 
                 <div class="container tableContainer">
                     <div class="row">
@@ -80,11 +79,11 @@
                 </div>
        </div>
  </div>  
-        <div class="container footer">
-            <div>
-                 <p>TGIF | all rigths reserved</p>
-            </div>
+   <div class="container footer">
+        <div>
+            <p>TGIF | all rigths reserved</p>
         </div>
+   </div>
         <!-- BOOTSTRAP: jQuery Library from website for header-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- BOOTSTRAP jQuery Library-->
@@ -99,8 +98,6 @@
         <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
         <script src="../../dist/js/bootstrap.min.js"></script>
         <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-        <!-- following line: my JS -->
-        <!--    <script src ="script/pro-congress-113-senate-DATA.js"></script>-->
         <script>$(function(){
                     $("#header").load("header.html");  
                     });

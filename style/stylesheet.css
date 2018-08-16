@@ -79,6 +79,22 @@
 
 }
 
+#filtersBox{
+    display:flex;
+    flex-direction: row;
+    
+    padding: 1px;
+    
+}
+
+#filtersBox > div{
+    margin:5px;
+}
+
+#state_filter{
+    margin-left:50px !important;
+}
+
 
 .textContainer{
     padding-left: 15px;

@@ -26,24 +26,24 @@
                     <div class="col-sm.-3"></div>
         </div>  
     </div> 
-                <!-- the class "container is from Bootstrap (like "container-fluid") and has fixed width (unlike "container-fluid" class, which has full width) -->
+ 
     <div id="vueApp">
-                  <div class="container" v-if="members.length == 0">
-                            <div class="row">   
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
-                                <div class="col-sm-2"></div>
-                            </div>
-                  </div>
+            <div class="container" v-if="members.length == 0">
+                <div class="row">   
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8 waitBox"><img src="please_wait.gif"></div>
+                        <div class="col-sm-2"></div>
+                </div>
+            </div>
 
-               <div class ="vueContainer" v-if="showVue">     
+            <div class ="vueContainer" v-if="showVue">     
                 <form class = "container  form-horizontal">
-                    <div class ="row"> <!-- better to use other attributes, like FLEX -->
-                        <div class="col-sm-2"><p>Filter by Party:</p> </div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
-                        <div class="col-sm-2"><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
-                        <div class="col-sm-4">Filter by state: 
+                    <div id = "filtersBox"> 
+                        <div ><p><b>Filter by Party:</b></p> </div>
+                        <div ><input type="checkbox" class="checkbox-inline" id="partyFilterD" name="party"  value = "D" v-on:click="filter"> Democratic</div>
+                        <div ><input type="checkbox" class="checkbox-inline" id="partyFilterR" name="party"  value = "R" v-on:click="filter" > Republican</div>
+                        <div><input type="checkbox" class="checkbox-inline" id="partyFilterI" name="party"  value = "I" v-on:click="filter" > Indipendent</div>
+                        <div id ="state_filter"><b>Filter by state:</b> 
                             <select id ="stateSelector" v-on:change="filter">
                                <option value="all">-All-</option>
                                 <option v-for="state in states" :value="state">{{state}}</option>
@@ -51,7 +51,6 @@
                         </div>
                      </div>
                 </form>
-
 
                 <div class="container tableContainer">
                     <div class="row">
@@ -79,9 +78,9 @@
                 </div>
             </div>
         </div>      
-                <div class="container footer">
-                     <p>TGIF | all rigths reserved</p>
-                </div>
+        <div class="container footer">
+            <p>TGIF | all rigths reserved</p>
+        </div>
 
     
             <!-- BOOTSTRAP: jQuery Library from website for header-->
@@ -101,8 +100,6 @@
             <!--   jQuery library taken from JSBin, from Raul's example -->
             <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 
-            <!-- following line: my JS -->
-            <!--    <script src ="script/pro-congress-113-senate-DATA.js"></script>-->
             <script>$(function(){
                     $("#header").load("header.html");  
                     });
